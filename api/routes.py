@@ -45,7 +45,6 @@ def caesar(request: CaesarRequest):
 
     handling_time = time.time() - start_time
     endpoint_logger.update_handling_time("/caesar", "POST", handling_time)
-    endpoint_logger.get_request_count("/caesar", "POST")
     summery_logger.load_summery()
 
     return response
