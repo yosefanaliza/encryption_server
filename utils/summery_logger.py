@@ -1,5 +1,6 @@
 import json
 from typing import Dict, Any
+from utils.endpoint_logger import get_endpoint_logger
 
 
 class SummeryLogger:
@@ -24,31 +25,50 @@ class SummeryLogger:
         with open(self.data_file, 'w') as f:
             json.dump(self.summery_data, f, indent=2)
     
-    def enter_endpoint(self, endpoint: str, method: str, handling_time: float, total_requests: int):
-        endpoint_name = f"{endpoint} {method}"
+    def load_summery(self):
+        """
+        Load data from endpoint_logger and update summery.json with calculated statistics.
+        """
+        # Get endpoint logger instance
+        endpoint_logger = get_endpoint_logger()
+        endpoints_data = endpoint_logger.endpoints_data
         
-        # Update highest requests
-        if total_requests > self.summery_data["highest_requests"]["number"]:
-            self.summery_data["highest_requests"]["name"] = endpoint_name
-            self.summery_data["highest_requests"]["number"] = total_requests
+        # Reset summery data
+        self.summery_data = {
+            "highest_requests": {"name": "", "number": 0},
+            "lowest_requests": {"name": "", "number": 0},
+            "highest_handeling_time": {"name": "", "number": 0},
+            "lowest": {"name": "", "number": 0}
+        }
         
-        # Update lowest requests (only if we have requests)
-        current_lowest = self.summery_data["lowest_requests"]["number"]
-        if total_requests > 0 and (current_lowest == 0 or total_requests < current_lowest):
-            self.summery_data["lowest_requests"]["name"] = endpoint_name
-            self.summery_data["lowest_requests"]["number"] = total_requests
-        
-        # Update highest handling time (only if we have requests and handling time)
-        if total_requests > 0 and handling_time > self.summery_data["highest_handling_time"]["number"]:
-            self.summery_data["highest_handling_time"]["name"] = endpoint_name
-            self.summery_data["highest_handling_time"]["number"] = round(handling_time, 4)
-        
-        # Update lowest handling time (only if we have requests and handling time)
-        current_lowest_time = self.summery_data["lowest_handling_time"]["number"]
-        if total_requests > 0 and handling_time > 0 and (current_lowest_time == 0 or handling_time < current_lowest_time):
-            self.summery_data["lowest_handling_time"]["name"] = endpoint_name
-            self.summery_data["lowest_handling_time"]["number"] = round(handling_time, 4)
-        
+        # Process each endpoint to find highest/lowest values
+        for ep in endpoints_data:
+            endpoint_name = f"{ep['url']} {ep['method']}"
+            total_requests = ep['stats']['total_requests_received']
+            handling_time = ep['stats']['avg_handling_time']
+            
+            # Update highest requests
+            if total_requests > self.summery_data["highest_requests"]["number"]:
+                self.summery_data["highest_requests"]["name"] = endpoint_name
+                self.summery_data["highest_requests"]["number"] = total_requests
+            
+            # Update lowest requests (only for endpoints with at least one request)
+            current_lowest = self.summery_data["lowest_requests"]["number"]
+            if total_requests > 0 and (current_lowest == 0 or total_requests < current_lowest):
+                self.summery_data["lowest_requests"]["name"] = endpoint_name
+                self.summery_data["lowest_requests"]["number"] = total_requests
+            
+            # Update highest handling time (only for endpoints with requests)
+            if total_requests > 0 and handling_time > self.summery_data["highest_handeling_time"]["number"]:
+                self.summery_data["highest_handeling_time"]["name"] = endpoint_name
+                self.summery_data["highest_handeling_time"]["number"] = round(handling_time, 4)
+            
+            # Update lowest handling time (only for endpoints with requests and non-zero time)
+            current_lowest_time = self.summery_data["lowest"]["number"]
+            if total_requests > 0 and handling_time > 0 and (current_lowest_time == 0 or handling_time < current_lowest_time):
+                self.summery_data["lowest"]["name"] = endpoint_name
+                self.summery_data["lowest"]["number"] = round(handling_time, 4)
+
         self._save_data()
     
     def get_summery(self) -> Dict[str, Any]:

@@ -45,8 +45,8 @@ def caesar(request: CaesarRequest):
 
     handling_time = time.time() - start_time
     endpoint_logger.update_handling_time("/caesar", "POST", handling_time)
-    total_requests = endpoint_logger.get_request_count("/caesar", "POST")
-    summery_logger.enter_endpoint("/caesar", "POST", handling_time, total_requests)
+    endpoint_logger.get_request_count("/caesar", "POST")
+    summery_logger.load_summery()
 
     return response
 
@@ -64,8 +64,7 @@ def fence_encrypt(text: str = Query(..., description="Text to encrypt")):
 
     handling_time = time.time() - start_time
     endpoint_logger.update_handling_time("/fence/encrypt", "GET", handling_time)
-    total_requests = endpoint_logger.get_request_count("/fence/encrypt", "GET")
-    summery_logger.enter_endpoint("/fence/encrypt", "GET", handling_time, total_requests)
+    summery_logger.load_summery()
 
     return response
 
@@ -87,9 +86,8 @@ def fence_decrypt(request: FenceDecryptRequest):
 
     handling_time = time.time() - start_time
     endpoint_logger.update_handling_time("/fence/decrypt", "POST", handling_time)
-    total_requests = endpoint_logger.get_request_count("/fence/decrypt", "POST")
-    summery_logger.enter_endpoint("/fence/decrypt", "POST", handling_time, total_requests)
-
+    summery_logger.load_summery()
+    
     return response
 
 

@@ -1,18 +1,18 @@
 {
   "highest_requests": {
     "name": "/fence/encrypt GET",
-    "number": 0
+    "number": 2
   },
   "lowest_requests": {
-    "name": "/fence/encrypt GET",
+    "name": "/fence/decrypt POST",
+    "number": 1
+  },
+  "highest_handeling_time": {
+    "name": "",
     "number": 0
   },
-  "highest_handling_time": {
-    "name": "/fence/encrypt GET",
-    "number": 0.0
-  },
-  "lowest_handling_time": {
-    "name": "/fence/encrypt GET",
-    "number": 0.0
+  "lowest": {
+    "name": "",
+    "number": 0
   }
 }
