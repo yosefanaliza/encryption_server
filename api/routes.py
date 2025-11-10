@@ -52,6 +52,10 @@ def caesar(request: CaesarRequest):
 
 @router.get("/fence/encrypt")
 def fence_encrypt(text: str = Query(..., description="Text to encrypt")):
+    """
+    fence cipher encryption
+    GET /fence/encrypt?text=<text>
+    """
     endpoint_logger.request_received("/fence/encrypt", "GET")
     start_time = time.time()
 
@@ -74,6 +78,11 @@ class FenceDecryptRequest(BaseModel):
 
 @router.post("/fence/decrypt")
 def fence_decrypt(request: FenceDecryptRequest):
+    """
+    fence cipher decryption
+    POST /fence/decrypt
+    Body: { "text": "string" }
+    """
     endpoint_logger.request_received("/fence/decrypt", "POST")
     start_time = time.time()
 
@@ -86,11 +95,10 @@ def fence_decrypt(request: FenceDecryptRequest):
     handling_time = time.time() - start_time
     endpoint_logger.update_handling_time("/fence/decrypt", "POST", handling_time)
     summery_logger.load_summery()
-    
+
     return response
 
 
 @router.get("/health")
 def health_check():
     return {"status": "healthy"}
-
