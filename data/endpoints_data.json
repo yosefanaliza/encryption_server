@@ -1,0 +1,26 @@
+[
+  {
+    "url": "/caesar",
+    "method": "POST",
+    "stats": {
+      "total_requests_received": 0,
+      "avg_handling_time": 0
+    }
+  },
+  {
+    "url": "/fence/encrypt",
+    "method": "GET",
+    "stats": {
+      "total_requests_received": 0,
+      "avg_handling_time": 0
+    }
+  },
+  {
+    "url": "/fence/decrypt",
+    "method": "POST",
+    "stats": {
+      "total_requests_received": 0,
+      "avg_handling_time": 0
+    }
+  }
+]
