@@ -52,9 +52,15 @@ class EndpointLogger:
         self._save_data()
         
 
+    def get_request_count(self, url: str, method: str) -> int:
+        endpoint = self._get_endpoint(url, method)
+        if endpoint is None:
+            return 0
+        return endpoint['stats']['total_requests_received']
+
 _logger_instance = None
 
-def get_logger() -> EndpointLogger:
+def get_endpoint_logger() -> EndpointLogger:
     global _logger_instance
     if _logger_instance is None:
         _logger_instance = EndpointLogger()

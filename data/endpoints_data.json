@@ -3,7 +3,7 @@
     "url": "/caesar",
     "method": "POST",
     "stats": {
-      "total_requests_received": 2,
+      "total_requests_received": 0,
       "avg_handling_time": 0.0
     }
   },
@@ -12,7 +12,7 @@
     "method": "GET",
     "stats": {
       "total_requests_received": 0,
-      "avg_handling_time": 0
+      "avg_handling_time": 0.0
     }
   },
   {
@@ -20,7 +20,7 @@
     "method": "POST",
     "stats": {
       "total_requests_received": 0,
-      "avg_handling_time": 0
+      "avg_handling_time": 0.0
     }
   }
 ]

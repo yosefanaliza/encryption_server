@@ -39,15 +39,15 @@ class SummeryLogger:
             self.summery_data["lowest_requests"]["number"] = total_requests
         
         # Update highest handling time (only if we have requests and handling time)
-        if total_requests > 0 and handling_time > self.summery_data["highest_handeling_time"]["number"]:
-            self.summery_data["highest_handeling_time"]["name"] = endpoint_name
-            self.summery_data["highest_handeling_time"]["number"] = round(handling_time, 4)
+        if total_requests > 0 and handling_time > self.summery_data["highest_handling_time"]["number"]:
+            self.summery_data["highest_handling_time"]["name"] = endpoint_name
+            self.summery_data["highest_handling_time"]["number"] = round(handling_time, 4)
         
         # Update lowest handling time (only if we have requests and handling time)
-        current_lowest_time = self.summery_data["lowest"]["number"]
+        current_lowest_time = self.summery_data["lowest_handling_time"]["number"]
         if total_requests > 0 and handling_time > 0 and (current_lowest_time == 0 or handling_time < current_lowest_time):
-            self.summery_data["lowest"]["name"] = endpoint_name
-            self.summery_data["lowest"]["number"] = round(handling_time, 4)
+            self.summery_data["lowest_handling_time"]["name"] = endpoint_name
+            self.summery_data["lowest_handling_time"]["number"] = round(handling_time, 4)
         
         self._save_data()
     
@@ -57,7 +57,7 @@ class SummeryLogger:
 
 _logger_instance = None
 
-def get_logger() -> SummeryLogger:
+def get_summery_logger() -> SummeryLogger:
     global _logger_instance
     if _logger_instance is None:
         _logger_instance = SummeryLogger()
