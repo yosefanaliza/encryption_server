@@ -3,8 +3,8 @@
     "url": "/caesar",
     "method": "POST",
     "stats": {
-      "total_requests_received": 0,
-      "avg_handling_time": 0
+      "total_requests_received": 2,
+      "avg_handling_time": 0.0
     }
   },
   {

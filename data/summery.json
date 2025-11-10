@@ -1,0 +1,18 @@
+{
+  "highest_requests":   { 
+	"name": "example POST",
+	"number": 0
+	},
+  "lowest_requests":    {
+	"name": "fence GET",
+	"number": 0
+	},
+  "highest_handeling_time": {
+	"name": "caesar POST",
+	"number": 0
+	},
+  "lowest": {
+	"name": "example POST",
+	"number": 0
+	}
+}

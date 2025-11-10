@@ -26,9 +26,6 @@ def caesar(request: CaesarRequest):
     if request.mode not in ['encrypt', 'decrypt']:
         raise HTTPException(status_code=400, detail="Mode must be 'encrypt' or 'decrypt'")
     
-
-    
-
     response = {}
 
     try:
@@ -45,6 +42,7 @@ def caesar(request: CaesarRequest):
     logger.update_handling_time('/caesar', 'POST', handling_time)
     
     return response
+
 @router.get('/fence/encrypt')
 def fence_encrypt(text: str = Query(..., description="Text to encrypt")):
     """
