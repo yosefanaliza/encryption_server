@@ -99,6 +99,21 @@ def fence_decrypt(request: FenceDecryptRequest):
     return response
 
 
-@router.get("/health")
-def health_check():
-    return {"status": "healthy"}
+@router.get("/test")
+def test():
+    """
+    Basic test endpoint
+    """
+    return {"msg": "hi from test"}
+
+
+@router.get("/test/{name}")
+def test_save_name(name: str):
+    try:
+        with open("names.txt", "a") as f:
+            f.write(name + "\n")
+        return {"msg": "saved user"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
